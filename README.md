@@ -1,5 +1,6 @@
 # Backend
-# Developed by: Maxwell Mendenhall
+## Developed by: Maxwell Mendenhall
+
 ## Getting Started
 ### Setting up the ENV
 1. Create a .env file in the root directory of the project.

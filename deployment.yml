@@ -31,4 +31,4 @@ spec:
         - name: UBI_PASSWORD
           value: yourpassword
         ports:
-        - containerPort: 5000
+        - containerPort: 3306

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: backend-cont
-        image: maxwellmendenhall/strike-force-tracker
+        image: maxwellmendenhall/strike-force-tracker:v1.0
         resources:
           requests:
             cpu: 10m

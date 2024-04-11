@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: statstrikeforce
+  labels:
+  role: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-deployment
+  template:
+    metadata:
+      labels:
+        app: backend-deployment
+    spec:
+      containers:
+      - name: backend-cont
+        image: rsayre14/csc468:Web-UI
+        resources:
+          requests:
+            cpu: 10m
+        ports:
+        - containerPort: 80

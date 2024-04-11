@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
-  namespace: statstrikeforce
+  name: webui-deployment
   labels:
   role: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend-deployment
+      app: webui-deployment
   template:
     metadata:
       labels:
-        app: backend-deployment
+        app: webui-deployment
     spec:
       containers:
-      - name: backend-cont
+      - name: webui-cont
         image: rsayre14/csc468:Web-UI
         resources:
           requests:

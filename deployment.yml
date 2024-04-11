@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: webui-deployment
   labels:
-  role: app
+    role: app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: webui-deployment
+      role: app
   template:
     metadata:
       labels:
-        app: webui-deployment
+        role: app
     spec:
       containers:
       - name: webui-cont

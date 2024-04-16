@@ -15,7 +15,7 @@ spec:
         role: app
     spec:
       containers:
-      - name: backend-cont
+      - name: backend
         image: maxwellmendenhall/strike-force-tracker:v1.0
         resources:
           requests:
@@ -30,4 +30,4 @@ spec:
         - name: UBI_PASSWORD
           value: yourpassword
         ports:
-        - containerPort: 3306
+        - containerPort: 80

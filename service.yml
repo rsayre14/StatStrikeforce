@@ -4,7 +4,7 @@ metadata:
   name: webui-svc
 spec:
   selector:
-    app: webui
+    role: app
   type: NodePort
   ports:
     - port: 80

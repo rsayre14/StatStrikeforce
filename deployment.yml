@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webui-deployment
+  name: webui
   labels:
     role: app
 spec:
@@ -15,10 +15,10 @@ spec:
         role: app
     spec:
       containers:
-      - name: webui-cont
+      - name: webui
         image: rsayre14/csc468:Web-UI
         resources:
           requests:
             cpu: 10m
         ports:
-        - containerPort: 3306
+        - containerPort: 80

@@ -1,6 +1,8 @@
 import asyncio
 from siegeapi import Auth
 from flask import Flask, request, jsonify
+import json
+import pprint
 from dotenv import load_dotenv
 import os
 from database import Database
@@ -25,11 +27,49 @@ async def sample(user_id):
 
         await player.load_playtime()
 
-        # Collect data in a dictionary to return
+        await player.load_operators()
+        await player.load_maps()
+        await player.load_trends()
+        await player.load_weapons()
+
+        map_stats_defender = []
+        map_stats_attacker = []
+
+        for map_object in player.maps.all.defender:
+            stats = {
+                "Map Name": map_object.map_name,
+                "Matches Won": map_object.matches_won,
+                "Matches Lost": map_object.matches_lost,
+                "Rounds Won": map_object.rounds_won,
+                "Rounds Lost": map_object.rounds_lost,
+                "Win/Loss Ratio": map_object.win_loss_ratio,
+                "Headshot Accuracy": map_object.headshot_accuracy,
+                "Kill/Death Ratio": map_object.kill_death_ratio,
+                "Rounds with an Ace": map_object.rounds_with_an_ace
+            }
+            map_stats_defender.append(stats)
+
+        for map_object in player.maps.all.attacker:
+            stats = {
+                "Map Name": map_object.map_name,
+                "Matches Won": map_object.matches_won,
+                "Matches Lost": map_object.matches_lost,
+                "Rounds Won": map_object.rounds_won,
+                "Rounds Lost": map_object.rounds_lost,
+                "Win/Loss Ratio": map_object.win_loss_ratio,
+                "Headshot Accuracy": map_object.headshot_accuracy,
+                "Kill/Death Ratio": map_object.kill_death_ratio,
+                "Rounds with an Ace": map_object.rounds_with_an_ace
+            }
+            map_stats_attacker.append(stats)
+
         player_data = {
             "Name": player.name,
             "TotalTimePlayedSeconds": player.total_time_played,
-            "Level": player.level
+            "AttackerMapStats": map_stats_attacker,
+            "DefenderMapStats": map_stats_defender,
+            "TrendDefenderStats": player.trends.ranked.defender.win_loss_ratio.trend,
+            "TrendAttackerStats": player.trends.ranked.attacker.win_loss_ratio.trend
         }
 
         await auth.close()
@@ -53,4 +93,4 @@ def get_rainbow_stats():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=3000)

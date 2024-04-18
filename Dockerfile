@@ -26,3 +26,6 @@ EXPOSE 3000
 
 # Set ENTRYPOINT to use the initialization script
 ENTRYPOINT ["/app/init_db.sh"]
+
+# Run the Python script when the container launches
+CMD ["python", "app.py"]

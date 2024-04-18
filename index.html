@@ -44,20 +44,85 @@
     <div class="px-3 content" id="AboutContent">
       <h1>About Us</h1>
       <p class="lead">Meet our Team!</p>
-      <p> Our mission is to ........</p>  
+      <p> At StatStrikeforce, our mission is to revolutionize the way that you track Rainbow Six Siege! </p>  
     </div><!-- close about content --->
 
     <!-- TrackHere content -->
     <div class="px-3 content" id="TrackerContent">
       <div id="LandingPageContent">
       <h1>Track your stats here</h1>
-      <p class="lead">Track your newest statssss!</p>
+      <p class="lead">Check your R6 Progress Here!</p>
       <p class="lead">
         <button class="btn btn-lg btn-light fw-bold border-white bg-white trackerButton">Track now!</button>
       </p>
       </div>
       <div id="TrackerSearchContent">
-        search bar
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R6 Player Search</title>
+<style>
+  /* Basic CSS for styling */
+  #search-bar {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+  }
+
+  #search-results {
+    margin-top: 10px;
+  }
+
+  .player {
+    margin-bottom: 5px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Enter Your R6 Name Here!</h1>
+
+<input type="text" id="search-bar" placeholder="Enter player name...">
+<div id="search-results"></div>
+
+<script>
+  // JavaScript for handling search functionality
+  const players = [
+    "Player1",
+    "Player2",
+    "Player3",
+    "SpatieTV",
+    // Add more player names as needed
+  ];
+
+  const searchBar = document.getElementById('search-bar');
+  const searchResults = document.getElementById('search-results');
+
+  searchBar.addEventListener('input', function() {
+    const searchText = searchBar.value.toLowerCase();
+    const filteredPlayers = players.filter(player => player.toLowerCase().includes(searchText));
+    displayResults(filteredPlayers);
+  });
+
+  function displayResults(results) {
+    searchResults.innerHTML = ''; // Clear previous results
+    results.forEach(player => {
+      const playerElement = document.createElement('div');
+      playerElement.classList.add('player');
+      playerElement.textContent = player;
+      searchResults.appendChild(playerElement);
+    });
+  }
+</script>
+
+</body>
+</html>
+
       </div>
     </div><!-- close trackhere content-->
 

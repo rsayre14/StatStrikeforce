@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: machine-learning
+  name: machinelearning
   labels:
     role: app
 spec:
@@ -15,7 +15,7 @@ spec:
         role: app
     spec:
       containers:
-      - name: machine-learning
+      - name: machinelearning
         image: path/imagename:tag
         resources:
           requests:

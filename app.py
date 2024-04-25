@@ -1,8 +1,7 @@
 import asyncio
+import aiohttp
 from siegeapi import Auth
 from flask import Flask, request, jsonify
-import json
-import pprint
 from dotenv import load_dotenv
 import os
 from database import Database
@@ -11,6 +10,7 @@ app = Flask(__name__)
 load_dotenv()
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default_secret_key')
 DATABASE = os.environ.get('DATABASE')
+MACHINE_LEARNING = os.environ.get('MACHINE_LEARNING')
 db = Database(app, DATABASE)
 app.extensions['database'] = db
 
@@ -20,17 +20,16 @@ def backend_world():
     return 'Group 3 Backend!'
 
 
-async def sample(user_id):
+async def sample(user_id1, user_id2):
     try:
         auth = Auth(os.getenv('UBI_EMAIL'), os.getenv('UBI_PASSWORD'))
-        player = await auth.get_player(uid=user_id)
+        player = await auth.get_player(uid=user_id1)
+        player2 = await auth.get_player(uid=user_id2)
 
-        await player.load_playtime()
-
-        await player.load_operators()
         await player.load_maps()
         await player.load_trends()
-        await player.load_weapons()
+
+        await player2.load_trends()
 
         map_stats_defender = []
         map_stats_attacker = []
@@ -64,14 +63,21 @@ async def sample(user_id):
             map_stats_attacker.append(stats)
 
         player_data = {
-            "Name": player.name,
-            "TotalTimePlayedSeconds": player.total_time_played,
-            "AttackerMapStats": map_stats_attacker,
-            "DefenderMapStats": map_stats_defender,
-            "TrendDefenderStats": player.trends.ranked.defender.win_loss_ratio.trend,
-            "TrendAttackerStats": player.trends.ranked.attacker.win_loss_ratio.trend
+            "Attacker": {
+                "Name": player.name,
+                "WL": player.trends.ranked.attacker.win_loss_ratio.trend,
+                "KD": player.trends.ranked.attacker.kill_death_ratio.trend,
+                "HS": player.trends.ranked.attacker.headshot_accuracy.trend,
+                "KPR": player.trends.ranked.attacker.kills_per_round.trend,
+            },
+            "Defender": {
+                "Name": player2.name,
+                "WL": player2.trends.ranked.defender.win_loss_ratio.trend,
+                "KD": player2.trends.ranked.defender.kill_death_ratio.trend,
+                "HS": player2.trends.ranked.defender.headshot_accuracy.trend,
+                "KPR": player2.trends.ranked.defender.kills_per_round.trend,
+            }
         }
-
         await auth.close()
 
         return player_data
@@ -79,14 +85,27 @@ async def sample(user_id):
         print(e)
 
 
+async def send_data(player_data):
+
+    async with aiohttp.ClientSession() as session:
+        headers = {'Content-Type': 'application/json'}
+        async with session.post(MACHINE_LEARNING, json=player_data, headers=headers) as response:
+            if response.status == 200:
+                print('Data sent successfully')
+            else:
+                print('Failed to send data', await response.text())
+
+
 @app.route('/get_rainbow_stats', methods=['GET'])
 def get_rainbow_stats():
-    user_id = request.args.get('uid')
+    user_id_1 = request.args.get('uid1')
+    user_id_2 = request.args.get('uid2')
 
     # This runs the async function and waits for a response
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    player_data = loop.run_until_complete(sample(user_id))
+    player_data = loop.run_until_complete(sample(user_id_1, user_id_2))
+    loop.run_until_complete(send_data(player_data))
     loop.close()
 
     return jsonify(player_data)

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: machinelearning
-        image: path/imagename:tag
+        image: rsayre14/csc468:Machine-Learning
         resources:
           requests:
             cpu: 10m

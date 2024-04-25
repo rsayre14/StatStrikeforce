@@ -118,8 +118,7 @@
   </div><!-- close team members -->
 </div><!-- close about content -->
 
-
-   <!-- TrackHere content -->
+<!-- TrackHere content -->
 <div class="px-3 content" id="TrackerContent">
   <div id="LandingPageContent">
     <h1>Track Stats Here!</h1>
@@ -132,6 +131,7 @@
     <h1>Enter Your R6 Name Here!</h1>
     <input type="text" id="search-bar" placeholder="Enter player name...">
     <div id="search-results"></div>
+    <button class="btn btn-lg btn-primary fw-bold" id="trackHereButton" style="margin-top: 10px;">Track Here</button>
   </div>
 </div><!-- close trackhere content-->
 
@@ -171,7 +171,17 @@
       searchResults.appendChild(playerElement);
     });
   }
+
+  // JavaScript for handling "Track Here" button click event
+  document.getElementById('trackHereButton').addEventListener('click', function() {
+    const searchValue = searchBar.value;
+    // Perform tracking logic with the entered player name
+    alert("Tracking " + searchValue + "...");
+  });
 </script>
+
+ 
+  
 
     <footer class="mt-auto text-white-50">
       <p><a href="https://github.com/rsayre14/S24_CSC468-01_Team3/tree/ui" class="text-white">Github</a>.</p>

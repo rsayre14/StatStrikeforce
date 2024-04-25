@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: rsayre14/csc468:backend
+        image: rsayre14/csc468:Backend
         resources:
           requests:
             cpu: 10m

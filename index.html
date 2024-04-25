@@ -180,13 +180,36 @@
   });
 
 // PUT API STUFF HERE
+$(document).ready(function () {
+            // Make AJAX request to fetch rainbow stats
+            $.ajax({
+                url: '/get_rainbow_stats?uid1=your_user_id_1&uid2=your_user_id_2',
+                type: 'GET',
+                success: function (data) {
+                    // Handle successful response
+                    displayStats(data);
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error('Error fetching rainbow stats:', error);
+                }
+            });
 
+            function displayStats(data) {
+                // Example: Display attacker and defender stats
+                $('#stats-container').append('<h2>Attacker</h2>');
+                $('#stats-container').append('<p>Name: ' + data.Attacker.Name + '</p>');
+                $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Attacker.WL + '</p>');
+                // Add more stats as needed
+
+                $('#stats-container').append('<h2>Defender</h2>');
+                $('#stats-container').append('<p>Name: ' + data.Defender.Name + '</p>');
+                $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Defender.WL + '</p>');
+                // Add more stats as needed
+            }
+        });
   
 </script>
-
- 
-  
-
     <footer class="mt-auto text-white-50">
       <p><a href="https://github.com/rsayre14/S24_CSC468-01_Team3/tree/ui" class="text-white">Github</a>.</p>
     </footer>

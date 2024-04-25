@@ -9,6 +9,4 @@ COPY index.html .
 COPY cover.css .
 COPY background.jpeg .
 COPY menuswap.js .
-
-# Expose port 80 to allow external access
-EXPOSE 80
+COPY formHandler.js .

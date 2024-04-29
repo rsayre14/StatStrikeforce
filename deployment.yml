@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: webui
-        image: rsayre14/csc468:Web-UI
+        image: rsayre14/csc468:webui
         resources:
           requests:
             cpu: 10m
         ports:
-        - containerPort: 80
+        - containerPort: 5000

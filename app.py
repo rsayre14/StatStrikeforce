@@ -15,7 +15,8 @@ MACHINE_LEARNING = os.environ.get('MACHINE_LEARNING')
 db = Database(app, DATABASE)
 app.extensions['database'] = db
 
-# endpoi@app.route('/signup', methods=['POST'])  # Added signup endpoint
+#endpoint
+@app.route('/signup', methods=['POST'])  # Added signup endpoint
 def signup():
     username = request.form.get('username')
     password = request.form.get('password')

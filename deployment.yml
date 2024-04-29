@@ -16,18 +16,9 @@ spec:
     spec:
       containers:
       - name: backend
-        image: rsayre14/csc468:Backend
+        image: rsayre14/csc468:backend
         resources:
           requests:
             cpu: 10m
-        env: 
-        - name: SECRET_KEY
-          value: your_secret_key
-        - name: DATABASE
-          value: path_to_your_database.db
-        - name: UBI_EMAIL
-          value: example@example.com
-        - name: UBI_PASSWORD
-          value: yourpassword
         ports:
-        - containerPort: 80
+        - containerPort: 5000

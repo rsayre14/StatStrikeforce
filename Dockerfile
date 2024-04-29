@@ -20,7 +20,7 @@ COPY . /app
 # Make sure the initialization script is executable
 RUN chmod +x /app/init_db.sh
 
-# Make port 3000 available to the world outside this container
+# Make port 5000 available to the world outside this container
 EXPOSE 5000
 
 # Set ENTRYPOINT to use the initialization script

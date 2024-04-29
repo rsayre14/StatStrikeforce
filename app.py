@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
 from database import Database
+import bcrypt
 
 app = Flask(__name__)
 load_dotenv()
@@ -13,6 +14,37 @@ DATABASE = os.environ.get('DATABASE')
 MACHINE_LEARNING = os.environ.get('MACHINE_LEARNING')
 db = Database(app, DATABASE)
 app.extensions['database'] = db
+
+# endpoi@app.route('/signup', methods=['POST'])  # Added signup endpoint
+def signup():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    # Hash the password
+    password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    db.query_db(
+        "INSERT INTO user (username, password_hash) VALUES (?, ?)",
+        [username, password_hash],
+        )
+    
+    return jsonify({"success": True, "message": "User created successfully"}), 201
+
+# Endpoint for login
+@app.route('/login', methods=['POST'])  # Added login endpoint
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    user = db.query_db(
+        "SELECT * FROM user WHERE username = ?", [username], one=True
+    )
+
+    # Check password against hash
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash']):
+        return jsonify({"success": True, "message": "Login successful"}), 200
+    else:
+        return jsonify({"success": False, "message": "Invalid username or password"}), 401
 
 
 @app.route('/')

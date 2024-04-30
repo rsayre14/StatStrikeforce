@@ -95,32 +95,22 @@
         <p>Or</p>
         <h2>Sign Up</h2>
         <form id="signupForm">
-          <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div>
-            <label for="passWord">Password:</label>
-            <input type="password" id="passWord" name="passWord" required>
-          </div>
-          <div>
-            <label for="r6Account">Rainbow Six Account:</label>
-            <input type="text" id="r6Account" name="r6Account" required>
-          </div>
-          <button type="button" onclick="submitForm()">Sign Up</button>
-        </form>
+            <div>
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+              <label for="passWord">Password:</label>
+              <input type="password" id="passWord" name="passWord" required>
+            </div>
+            <div>
+              <label for="r6Account">Rainbow Six Account:</label>
+              <input type="text" id="r6Account" name="r6Account" required>
+            </div>
+            <button type="button" onclick="submitForm()">Sign Up</button>
+          </form>
       </div>
     </div><!-- close Homebase content div -->
-
-    <script>
-      document.getElementById('loginButton').addEventListener('click', function() {
-        const loginOrSignup = document.getElementById('loginOrSignup');
-        const loginButton = document.getElementById('loginButton');
-        loginOrSignup.style.display = (loginOrSignup.style.display === 'none') ? 'block' : 'none';
-        loginButton.style.display = 'none'; // Hide the login button
-      });
-    </script>
-
 
     <!-- About content -->
     <div class="px-3 content" id="AboutContent">
@@ -141,7 +131,7 @@
         <!-- Member 2 -->
         <div class="member">
           <h3>Maxwell Mendenhall</h3>
-          <p>Max worked on our Machine Learning Model, using Python, Flask, Asyncio, SiegeAPI, Dotenv, and OS to complete this.</p>
+          <p>Max worked on our Machine Learning Model, using Python,Flask, Asyncio, SiegeAPI, Dotenv, and OS to complete this. </p>
         </div>
 
         <!-- Member 3 -->
@@ -155,6 +145,7 @@
           <h3>Tobyn Sitar</h3>
           <p>Tobyn worked on our Database design, using SQLite and Python to send information to the UI.</p>
         </div>
+
       </div><!-- close team members -->
     </div><!-- close about content -->
 
@@ -179,112 +170,15 @@
     <div class="px-3 content" id="StatsContent" style="display: none;">
       <h1>Stats Here</h1>
       <p>Displaying Rainbow Six Siege stats here...</p>
-      <!-- You can display the stats dynamically here using JavaScript -->
+      <div>
+        <label for="userID1">User ID 1:</label>
+        <input type="text" id="userID1" name="userID1" required>
+      </div>
+      <div>
+        <label for="userID2">User ID 2:</label>
+        <input type="text" id="userID2" name="userID2" required>
+      </div>
     </div><!-- close stats content -->
-
-    <!-- Redirection page content -->
-    <div class="px-3 content" id="RedirectionContent" style="display: none;">
-      <h1>Redirection Page</h1>
-      <p>Please enter your user IDs to proceed:</p>
-      <form id="userIDsForm">
-        <div>
-          <label for="userID1">User ID 1:</label>
-          <input type="text" id="userID1" name="userID1" required>
-        </div>
-        <div>
-          <label for="userID2">User ID 2:</label>
-          <input type="text" id="userID2" name="userID2" required>
-        </div>
-        <button type="button" onclick="redirectToStats()">Go to Stats</button>
-      </form>
-    </div><!-- close redirection content-->
-
-    <script>
-      // JavaScript for handling button click event
-      document.getElementById('trackButton').addEventListener('click', function() {
-        const trackButton = document.getElementById('trackButton');
-        const trackerSearchContent = document.getElementById('TrackerSearchContent');
-        trackButton.style.display = 'none'; // Hide the button
-        trackerSearchContent.style.display = 'block'; // Show the search content
-      });
-
-      // JavaScript for handling "Track Here" button click event
-      document.getElementById('trackHereButton').addEventListener('click', function() {
-        const searchValue = document.getElementById('search-bar').value;
-        // Perform tracking logic with the entered player name
-        alert("Tracking " + searchValue + "...");
-        // For demonstration purpose, showing the Stats Content div
-        document.getElementById('TrackerContent').style.display = 'none';
-        document.getElementById('StatsContent').style.display = 'block';
-      });
-
-      function redirectToStats() {
-        const form = document.getElementById('userIDsForm');
-        const formData = new FormData(form);
-        const userID1 = formData.get('userID1');
-        const userID2 = formData.get('userID2');
-
-        // Redirect to the "Stats Here" page with user IDs as query parameters
-        window.location.href = 'stats.html?userID1=' + userID1 + '&userID2=' + userID2;
-      }
-
-      function submitForm() {
-        const form = document.getElementById('signupForm');
-        const formData = new FormData(form);
-        const data = {
-          username: formData.get('email'),  // Assuming you want to use the email as the username
-          password: formData.get('passWord'),
-          r6Account: formData.get('r6Account')
-        };
-
-        fetch('http://localhost:3000/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          alert(data.message);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          alert('Failed to sign up');
-        });
-      }
-
-      // PUT API STUFF HERE
-      $(document).ready(function () {
-        // Make AJAX request to fetch rainbow stats
-        $.ajax({
-          url: '/get_rainbow_stats?uid1=your_user_id_1&uid2=your_user_id_2',
-          type: 'GET',
-          success: function (data) {
-            // Handle successful response
-            displayStats(data);
-          },
-          error: function (xhr, status, error) {
-            // Handle error
-            console.error('Error fetching rainbow stats:', error);
-          }
-        });
-
-        function displayStats(data) {
-          // Example: Display attacker and defender stats
-          $('#stats-container').append('<h2>Attacker</h2>');
-          $('#stats-container').append('<p>Name: ' + data.Attacker.Name + '</p>');
-          $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Attacker.WL + '</p>');
-          // Add more stats as needed
-
-          $('#stats-container').append('<h2>Defender</h2>');
-          $('#stats-container').append('<p>Name: ' + data.Defender.Name + '</p>');
-          $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Defender.WL + '</p>');
-          // Add more stats as needed
-        }
-      });
-    </script>
 
     <footer class="mt-auto text-white-50">
       <p><a href="https://github.com/rsayre14/S24_CSC468-01_Team3/tree/ui" class="text-white">Github</a>.</p>
@@ -293,6 +187,121 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="menuswap.js"></script>
+  <script>
+    function redirectToStats() {
+      const form = document.getElementById('userIDsForm');
+      const formData = new FormData(form);
+      const userID1 = formData.get('userID1');
+      const userID2 = formData.get('userID2');
+
+      // Redirect to the "Stats Here" page with user IDs as query parameters
+      window.location.href = 'stats.html?userID1=' + userID1 + '&userID2=' + userID2;
+    }
+  </script>
+  <script>
+    // JavaScript for handling button click event
+    document.getElementById('trackButton').addEventListener('click', function() {
+      const trackButton = document.getElementById('trackButton');
+      const trackerSearchContent = document.getElementById('TrackerSearchContent');
+      trackButton.style.display = 'none'; // Hide the button
+      trackerSearchContent.style.display = 'block'; // Show the search content
+    });
+
+    // JavaScript for handling search functionality
+    const players = [
+    "Player1",
+    "Player2",
+    "Player3",
+    "SpatieTV",
+    // Add more player names as needed
+    ];
+
+    const searchBar = document.getElementById('search-bar');
+    const searchResults = document.getElementById('search-results');
+
+    searchBar.addEventListener('input', function() {
+      const searchText = searchBar.value.toLowerCase();
+      const filteredPlayers = players.filter(player => player.toLowerCase().includes(searchText));
+      displayResults(filteredPlayers);
+    });
+
+    function displayResults(results) {
+      searchResults.innerHTML = ''; // Clear previous results
+      results.forEach(player => {
+        const playerElement = document.createElement('div');
+        playerElement.classList.add('player');
+        playerElement.textContent = player;
+        searchResults.appendChild(playerElement);
+      });
+    }
+
+    // JavaScript for handling "Track Here" button click event
+    document.getElementById('trackHereButton').addEventListener('click', function() {
+      const searchValue = searchBar.value;
+      // Perform tracking logic with the entered player name
+      alert("Tracking " + searchValue + "...");
+      // For demonstration purpose, showing the Stats Content div
+      document.getElementById('TrackerContent').style.display = 'none';
+      document.getElementById('StatsContent').style.display = 'block';
+    });
+
+    function submitForm() {
+      const form = document.getElementById('signupForm');
+      const formData = new FormData(form);
+      const data = {
+        username: formData.get('email'),  // Assuming you want to use the email as the username
+        password: formData.get('passWord'),
+        r6Account: formData.get('r6Account')
+      };
+
+      fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert(data.message);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('Failed to sign up');
+      });
+    }
+
+    // PUT API STUFF HERE
+    $(document).ready(function () {
+      // Make AJAX request to fetch rainbow stats
+      $.ajax({
+        url: '/get_rainbow_stats?uid1=your_user_id_1&uid2=your_user_id_2',
+        type: 'GET',
+        success: function (data) {
+          // Handle successful response
+          displayStats(data);
+        },
+        error: function (xhr, status, error) {
+          // Handle error
+          console.error('Error fetching rainbow stats:', error);
+        }
+      });
+
+      function displayStats(data) {
+        // Example: Display attacker and defender stats
+        $('#stats-container').append('<h2>Attacker</h2>');
+        $('#stats-container').append('<p>Name: ' + data.Attacker.Name + '</p>');
+        $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Attacker.WL + '</p>');
+        // Add more stats as needed
+
+        $('#stats-container').append('<h2>Defender</h2>');
+        $('#stats-container').append('<p>Name: ' + data.Defender.Name + '</p>');
+        $('#stats-container').append('<p>Win/Loss Ratio: ' + data.Defender.WL + '</p>');
+        // Add more stats as needed
+      }
+    });
+  </script>
   <script>
     function submitForm() {
       // Redirect to the "Stats Here" page
@@ -310,9 +319,9 @@
       // Simulate login success
       // Replace this with actual login logic and redirection
       alert('Login successful');
-      // For demonstration purpose, showing the Redirection Content div
+      // For demonstration purpose, showing the Stats Content div
       document.getElementById('HomebaseContent').style.display = 'none';
-      document.getElementById('RedirectionContent').style.display = 'block';
+      document.getElementById('StatsContent').style.display = 'block';
     }
   </script>
 </body>

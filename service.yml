@@ -7,5 +7,5 @@ spec:
     app: machinelearning
   ports:
   - protocol: TCP
-    port: 5000
-    targetPort: 5000
+    port: 3001
+    targetPort: 3001

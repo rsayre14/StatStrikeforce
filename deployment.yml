@@ -21,4 +21,4 @@ spec:
           requests:
             cpu: 10m
         ports:
-        - containerPort: 5000
+        - containerPort: 3001

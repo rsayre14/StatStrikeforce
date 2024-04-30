@@ -18,13 +18,11 @@ RUN pip install gunicorn
 COPY . /app
 
 # Make sure the initialization script is executable
+COPY init_db.sh /app/
 RUN chmod +x /app/init_db.sh
 
 # Make port 5000 available to the world outside this container
-EXPOSE 5000
+EXPOSE 3000
 
 # Set ENTRYPOINT to use the initialization script
 ENTRYPOINT ["/app/init_db.sh"]
-
-# Run the Python script when the container launches
-CMD ["python", "app.py"]

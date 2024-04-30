@@ -10,4 +10,4 @@ if [ ! -f "$DB_PATH" ]; then
 fi
 
 # Start Gunicorn with Flask application
-exec gunicorn -b :5000 -w 4 app:app
+exec gunicorn -b :3000 -w 4 app:app

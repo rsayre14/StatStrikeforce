@@ -62,7 +62,7 @@ def login():
 
 @app.route('/')
 def backend_world():
-    return 'Group 3 Backend!'
+    return render_template("index.html")
 
 
 async def sample(user_id1, user_id2):

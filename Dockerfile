@@ -18,7 +18,7 @@ COPY . /app
 COPY init_ml.sh /app/
 RUN chmod +x /app/init_ml.sh
 
-# Make port 5000 available to the world outside this container
+# Make port 3001 available to the world outside this container
 EXPOSE 3001
 
 # Set ENTRYPOINT to use the initialization script

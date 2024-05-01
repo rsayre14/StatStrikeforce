@@ -30,6 +30,6 @@ spec:
         - name: UBI_PASSWORD
           value: CSC468group3!
         - name: MACHINE_LEARNING
-          value: http://IP:3001/accept_data
+          value: http://155.98.36.75:3001/accept_data
         ports:
         - containerPort: 80

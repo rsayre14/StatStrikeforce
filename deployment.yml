@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: webui
   labels:
     role: app
 spec:
@@ -15,21 +15,10 @@ spec:
         role: app
     spec:
       containers:
-      - name: backend
-        image: rsayre14/csc468:backend
+      - name: webui
+        image: rsayre14/csc468:webui
         resources:
           requests:
             cpu: 10m
-        env: 
-        - name: SECRET_KEY
-          value: your_secret_key
-        - name: DATABASE
-          value: path.db
-        - name: UBI_EMAIL
-          value: ktypeaceout@gmail.com
-        - name: UBI_PASSWORD
-          value: CSC468group3!
-        - name: MACHINE_LEARNING
-          value: http://155.98.36.75:3001/accept_data
         ports:
         - containerPort: 80
